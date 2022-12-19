@@ -72,35 +72,35 @@ describe('getCategoryPath', () => {
   it('should throw error if nested objects miss \'name\' param', () => {
     expect(() => {
       const categoriesTree = [{ subcategories: [] }]
-      getCategoryPath(categoriesTree, searchCategory4)
+      getCategoryPath(categoriesTree, absentCategory)
     }).toThrowError(INTERNAL_ERROR.NAME_PARAMETER_MISSING)
   })
 
   it('should throw error if nested objects \'name\' param is not string', () => {
     expect(() => {
-      const categoriesTree = [{ name: 0, subcategories: [] }]
-      getCategoryPath(categoriesTree, searchCategory4)
+      const categoriesTree = [{ name: 'asdf', subcategories: [{ name: 0, subcategories: [] }] }]
+      getCategoryPath(categoriesTree, absentCategory)
     }).toThrowError(INTERNAL_ERROR.NAME_PARAMETER_TYPE_ERROR)
   })
 
   it('should throw error if nested objects \'name\' param is empty string', () => {
     expect(() => {
       const categoriesTree = [{ name: '', subcategories: [] }]
-      getCategoryPath(categoriesTree, searchCategory4)
+      getCategoryPath(categoriesTree, absentCategory)
     }).toThrowError(INTERNAL_ERROR.NAME_PARAMETER_EMPTY)
   })
 
   it('should throw error if nested objects miss \'subcategories\' param', () => {
     expect(() => {
-      const categoriesTree = [{ name: searchCategory4 }]
-      getCategoryPath(categoriesTree, searchCategory4)
+      const categoriesTree = [{ name: 'asdf' }]
+      getCategoryPath(categoriesTree, absentCategory)
     }).toThrowError(INTERNAL_ERROR.SUBCATEGORIES_PARAMETER_MISSING)
   })
 
   it('should throw error if nested objects \'subcategories\' param is not an array', () => {
     expect(() => {
-      const categoriesTree = [{ name: searchCategory4, subcategories: {} }]
-      getCategoryPath(categoriesTree, searchCategory4)
+      const categoriesTree = [{ name: 'asdf', subcategories: {} }]
+      getCategoryPath(categoriesTree, absentCategory)
     }).toThrowError(INTERNAL_ERROR.SUBATEGORIES_PARAMETER_TYPE_ERROR)
   })
 
@@ -120,4 +120,6 @@ describe('getCategoryPath', () => {
   it(`should return a string with '${pathWithSearchCategory5}' if '${searchCategory5}' is found`, () => {
     expect(getCategoryPath(nestedCategoriesTree, searchCategory5)).toBe(pathWithSearchCategory5)
   })
+
+  // missing behaviour for duplicated category found
 })
